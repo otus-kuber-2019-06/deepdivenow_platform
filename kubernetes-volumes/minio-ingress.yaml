@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: minio-host
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/custom-http-errors: 401,402,403,404,502
+    nginx.ingress.kubernetes.io/default-backend: nginx-errors
+spec:
+  rules:
+  - host: minio
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: minio
+          servicePort: minio
